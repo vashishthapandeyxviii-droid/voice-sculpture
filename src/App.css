@@ -1,0 +1,54 @@
+/* page background */
+body {
+    margin: 0;
+    background: #05030f;
+    color: white;
+    font-family: system-ui, sans-serif;
+}
+/*app looks like*/
+.app{
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* title of the app */
+.title{
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.4rem;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #8b5cf6, #3b82fb, #22d3ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+} 
+
+.mic-button{
+    margin-top: auto;
+    padding: 14px 36px;
+    font-size: 1rem;
+    color: white;
+    background: rgba(139, 92, 246, 0.5);
+    border: 1px solid #8b5cf6;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+    transition: all 0.3s ease;    
+}
+
+.mic-button:hover{
+    border-color: #22d3ee;
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.7);
+}
+
+.status{
+    margin: 16px 0 0;
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
