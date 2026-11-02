@@ -1,6 +1,6 @@
 import {useState} from "react";
 import "./App.css";
-import SculptureCanvas from "./components/SculptureCanvas"; 
+import SculptureCanvas from "./components/SculptureCanvas";
 
 function App(){
   const [listening, setListening] = useState(false); //camelCase 
@@ -12,10 +12,10 @@ function handleToggle(){
 
 return(
   <div className= "app">
-    <SculptureCanvas/>
+    <SculptureCanvas /> 
     <h1 className="title"> Voice Sculpture</h1>
     <button className= "mic-button" onClick={handleToggle}> 
-      {listening?"Stop Microphone":"Start Miscophone"}
+      {listening?"Stop Microphone":"Start Microphone"}
 
     </button>
     <p className= "status">

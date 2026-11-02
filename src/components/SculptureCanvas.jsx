@@ -1,5 +1,6 @@
 import { useEffect, useRef} from "react";
 import * as THREE from "three";
+import { createSculpture } from "../three/createSculpture";
 
 function SculptureCanvas(){
     const mountRef=useRef(null);
@@ -25,21 +26,32 @@ function SculptureCanvas(){
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         mount.appendChild(renderer.domElement);
 
-        //Temporary test object
-        const geometry= new THREE.BoxGeometry(1.5, 1.5, 1.5);
-        const material = new THREE.MeshNormalMaterial();
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+        //The Sculpture
+        const sculpture = createSculpture();
+        scene.add(sculpture);
+        //LIGHTING
+        scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+
+        const violetLight = new THREE.PointLight(0x8b5cf6, 60, 20);
+        violetLight.position.set(-4, 3, 4);
+        scene.add(violetLight);
+
+        const blueLight = new THREE.PointLight(0x3b82f6, 60, 20);
+        blueLight.position.set(4, -2, 4);
+        scene.add(blueLight);
+
+        const cyanLight = new THREE.PointLight(0x22d3ee, 40, 20);
+        cyanLight.position.set(0, 4, -4);
+        scene.add(cyanLight);
 
         //4. Animation loop 
-        let frameId;
+        let frameId; 
         function animate() {
             frameId= requestAnimationFrame(animate);
-            cube.rotation.x +=0.01;
-            cube.rotation.y +=0.01;
+            sculpture.rotation.y += 0.005; 
             renderer.render(scene, camera);
         }
-        animate();
+        animate(); 
 
         // responsive design
         function handleResize() {
@@ -54,8 +66,8 @@ function SculptureCanvas(){
             cancelAnimationFrame(frameId);
             window.removeEventListener("resize", handleResize);
             mount.removeChild(renderer.domElement);
-            geometry.dispose();
-            material.dispose();
+            sculpture.geometry.dispose();
+            sculpture.material.dispose();
             renderer.dispose();
         };
     }, []);
