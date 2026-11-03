@@ -52,3 +52,9 @@ body {
     font-size: 0.9rem;
     opacity: 0.6;
 }
+/* lift the interface above the canvas */
+.title, .mic-button, .status{
+    position: relative;
+    z-index: 1;
+}
+
