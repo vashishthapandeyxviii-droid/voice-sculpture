@@ -1,6 +1,6 @@
 import { useEffect, useRef} from "react";
 import * as THREE from "three";
-import { createSculpture } from "../three/createSculpture";
+import { createSculpture, updateSculpture} from "../three/createSculpture.js";
 
 function SculptureCanvas(){
     const mountRef=useRef(null);
@@ -45,9 +45,12 @@ function SculptureCanvas(){
         scene.add(cyanLight);
 
         //4. Animation loop 
+        const timer = new THREE.Timer(); //timer is newest replacement of CLock. 
         let frameId; 
         function animate() {
             frameId= requestAnimationFrame(animate);
+            timer.update();
+            updateSculpture(sculpture, timer.getElapsed());
             sculpture.rotation.y += 0.005; 
             renderer.render(scene, camera);
         }
