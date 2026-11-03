@@ -2,8 +2,13 @@ import { useEffect, useRef} from "react";
 import * as THREE from "three";
 import { createSculpture, updateSculpture} from "../three/createSculpture.js";
 
-function SculptureCanvas(){
+function SculptureCanvas({ getAudioData}) {
     const mountRef=useRef(null);
+    //holds the latest getAudioData, so the animation loop can always access it 
+    const audioRef = useRef(getAudioData);
+    useEffect(() => {
+        audioRef.current = getAudioData;
+    }, [getAudioData]); 
     useEffect(() => {
         const mount = mountRef.current;
 
@@ -50,7 +55,8 @@ function SculptureCanvas(){
         function animate() {
             frameId= requestAnimationFrame(animate);
             timer.update();
-            updateSculpture(sculpture, timer.getElapsed());
+            const audio = audioRef.current();
+            updateSculpture(sculpture, timer.getElapsed(), audio); 
             sculpture.rotation.y += 0.005; 
             renderer.render(scene, camera);
         }
