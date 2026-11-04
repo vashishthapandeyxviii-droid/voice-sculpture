@@ -21,7 +21,7 @@ return(
     <SculptureCanvas getAudioData= {getAudioData} /> 
     <h1 className="title"> Voice Sculpture</h1>
 
-    <button className= "mic-button" onClick={handleToggle}> 
+    <button className={`mic-button ${listening ? "active" : ""}`} onClick={handleToggle}> 
       {listening?"Stop Microphone":"Start Microphone"}
     </button>
 

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { mergeVertices} from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
-const BLUE = new THREE.Color(0x1d4ed8);
+const BLUE = new THREE.Color(0x7c3aed);
 const CYAN = new THREE.Color(0x22d3ee);
 
 
@@ -18,8 +18,8 @@ export function createSculpture() {
     //material: the surface look
     const material = new THREE.MeshStandardMaterial({
         color: 0x6d28d9, //deep violet base
-        emissive: 0x1d3ed8, //electric blue glow from eithin
-        emissiveIntensity: 0.35, 
+        emissive: 0x7c3aed, //electric blue glow from eithin
+        emissiveIntensity: 0.1, //how bright the glow is
         metalness: 0.6, //shiny metal surface
         roughness: 0.25, //low= smooth and gassy
     });
@@ -43,12 +43,12 @@ export function updateSculpture(mesh, time, audio) {
 
     //move each smoothed value 15% of the way toward the new taget
     //the multipliers boost quiet numbers, math.min caps them at 1
-    smooth.volume += (Math.min(audio.volume * 4,1)- smooth.volume) * 0.15;
+    smooth.volume += (Math.min(audio.volume * 6,1)- smooth.volume) * 0.15;
     smooth.bass += (Math.min(audio.bass * 1.2, 1)- smooth.bass) * 0.15;
-    smooth.treble += (Math.min(audio.treble * 5, 1)- smooth.treble) * 0.15;
+    smooth.treble += (Math.min(audio.treble * 2, 1)- smooth.treble) * 0.15;
 
     //louder voice to have bigger waves
-    const amplitude = 0.06 + smooth.volume*0.3
+    const amplitude = 0.06 + smooth.volume*0.5
 
     for (let i=0; i<positions.count; i++) {
         //original x, y, z of this point
@@ -66,13 +66,13 @@ export function updateSculpture(mesh, time, audio) {
         const ripple = Math.sin(x*8 + y*8 + time*4)*smooth.treble * 0.04;
 
         //bass swells the whole body; waves and ripples bend the surface
-        const scale = 1+ smooth.bass*0.12 + wave*amplitude + ripple;
+        const scale = 1+ smooth.bass*0.2 + wave*amplitude + ripple;
         positions.setXYZ(i, x*scale, y*scale, z*scale);
     }
     positions.needsUpdate = true; //tell THREE the points moved 
     mesh.geometry.computeVertexNormals(); //fix the lighting for new shape 
 
     // the glow gets brighter with volume and shifts to cyan with treble
-    mesh.material.emissiveIntensity = 0.35 + smooth.volume*1.2;
-    mesh.material.emissive.copy(BLUE).lerp(CYAN, smooth.treble); 
+    mesh.material.emissiveIntensity = 0.1 + smooth.volume*0.4;
+    mesh.material.emissive.copy(BLUE).lerp(CYAN, smooth.treble*0.7); 
 }

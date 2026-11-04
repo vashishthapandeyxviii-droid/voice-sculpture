@@ -58,3 +58,19 @@ body {
     z-index: 1;
 }
 
+/* Let mouse drag pass through the UI layer to 3D canvas */
+.app{
+    pointer-events: none;
+}
+
+/*keep the buttons clickable */
+.mic-button {
+    pointer-events: auto;
+}
+
+/* button look while microphone is on */
+.mmic-button.active {
+    background: rgba(34, 211, 238, 0.2);
+    border-color: #22d3ee;
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.7);
+}
